@@ -29,7 +29,7 @@ pip3 install -r requirements.txt
  - normalize_cols: required, index of the numerical attributes normalized by simple-normalization 
  - gmm_cols: required, index of the numerical attributes normalized by GMM-normalization 
  - one-hot_cols: required, index of the categorical attributes encoded by one-hot encoding 
- - ordinal_cols:mrequired, index of the categorical attributes encoded by ordinal encoding 
+ - ordinal_cols: required, index of the categorical attributes encoded by ordinal encoding 
  - epochs: required, number of training epochs 
  - steps_per_epoch: required, steps per epoch
  - rand_search: required, whether to search hyper-parameters randomly, yes or no ,
