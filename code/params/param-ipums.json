@@ -1,0 +1,22 @@
+[
+	{
+		"name": "ipums-LSTM",
+		"source": "dataset/ipums/ipums_train.csv",
+		"source_mask": "dataset/ipums/ipums_train_mask.csv",		
+		"target": "dataset/ipums/ipums_target.csv",
+		"target_mask": "dataset/ipums/ipums_target_mask.csv",
+		"Gx": "yes",
+		"Gm": "yes",
+		"gen_model":"LSTM",
+		"normalize_cols":[],
+		"gmm_cols":[4,5,6,23,24,27,39,40,47,48,49,50,51,52,53,54],
+		"one-hot_cols":[0,1,2,3,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,25,26,28,29,30,31,32,33,34,35,36,37,38,41,42,43,44,45,46,55,56,57,58,59],
+		"ordinal_cols":[],
+		"labels":["movedin"],
+		"epochs":1,
+		"steps_per_epoch":15000,
+		"n_search": 1,
+		"rand_search": "no",
+		"param":{"batch_size": 256, "z_dim": 128, "mask_gen_hidden_dims": [100, 100], "obs_gen_feature_dim": 100, "obs_gen_lstm_dim": 500, "obs_dis_hidden_dims": [300], "mask_dis_hidden_dims": [100, 100, 100], "lr": 0.0001, "cp": 0.01, "dis_train_num": 1}
+	}
+]

@@ -1,0 +1,21 @@
+[
+	{
+		"name": "okcupid-LSTM",
+		"source": "dataset/okcupid/okcupid_train.csv",
+		"source_mask": "dataset/okcupid/okcupid_train_mask.csv",		
+		"target": "dataset/okcupid/okcupid_target.csv",
+		"target_mask": "dataset/okcupid/okcupid_target_mask.csv",
+		"Gx": "yes",
+		"Gm": "yes",
+		"gen_model":"LSTM",
+		"normalize_cols":[],
+		"gmm_cols":[0,6,7],
+		"one-hot_cols":[1,2,3,4,5,8,9,10,11,12,13,14,15,16],
+		"ordinal_cols":[],
+		"labels":["job"],
+		"epochs":5,
+		"steps_per_epoch":5000,
+		"n_search": 7,
+		"rand_search": "yes"
+	}
+]
