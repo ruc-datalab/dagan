@@ -4,7 +4,8 @@ DAGAN is a framework used in adaptive data augmentation for supervised learning 
 An example is showed in the following figure. Suppose that a hospital trains a classifier that predicts cardiovascular disease (i.e., cardio) for patients based on a labeled source dataset Ds, which contains examination features, such as cholesterol (chol) and glucose (gluc), patient-reported features, such as smoking (smoke) and alcohol intake (alcohol), and demographics of patients, such as age. We can observe that Ds contains missing values in attributes smoke and alcohol, possibly because some patients may not want to report their habits. However, when being deployed in a production environment for prediction, the missing pattern of the unlabeled target data Dt might be different, as shown in Figure (b). There could be many reasons for such noise shift. For example, the model is deployed to predict another patient cohort or even in another hospital, where patients have missing values in examination features instead of smoking or alcohol habits. Not surprisingly, the model performance often degrades significantly when encountering the noise shift in the target data.
 
 ![avatar](https://github.com/ruclty/dagan/blob/master/figs/example.png)
-To tackle this problem, DAGAN extracts noise patterns from target data, and adapts the source data with the extracted target noise patterns while still preserving supervision signals in the source. Then, by retraining it on the adapted data, you can get model better serving the target.
+As showed in the following figure, for a binary classification problem that classifies data points to two groups, a true-group and a false-group, we have a labeled source Ds, where the true (resp. false) data points are in the area of “+”, the green circles (resp. “ ”, the pink triangles), and unlabeled target data Ut. The original model 𝑓 may cause both false positives (two red triangles) and false negatives (two light green circles). To tackle this problem, DAGAN extracts noise patterns from target data Ut, and adapts the source data with the extracted target noise patterns while still preserving supervision signals in the source. Then, by retraining it on the adapted data, we can get model  𝑓+ better serving the target.
+![avatar](https://github.com/ruclty/dagan/blob/master/figs/solution.png)
 
 
 ## Paper and Data
@@ -29,7 +30,7 @@ pip3 install -r requirements.txt
  - normalize_cols: required, index of the numerical attributes normalized by simple-normalization 
  - gmm_cols: required, index of the numerical attributes normalized by GMM-normalization 
  - one-hot_cols: required, index of the categorical attributes encoded by one-hot encoding 
- - ordinal_cols: required, index of the categorical attributes encoded by ordinal encoding 
+ - ordinal_cols:mrequired, index of the categorical attributes encoded by ordinal encoding 
  - epochs: required, number of training epochs 
  - steps_per_epoch: required, steps per epoch
  - rand_search: required, whether to search hyper-parameters randomly, yes or no ,
