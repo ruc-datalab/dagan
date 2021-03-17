@@ -15,7 +15,8 @@
 		"labels":["job"],
 		"epochs":5,
 		"steps_per_epoch":5000,
-		"n_search": 7,
-		"rand_search": "yes"
+		"n_search": 1,
+		"rand_search": "no",
+		"param":{"batch_size": 128, "z_dim": 100, "mask_gen_hidden_dims": [300], "obs_gen_feature_dim": 400, "obs_gen_lstm_dim": 400, "obs_dis_hidden_dims": [200], "mask_dis_hidden_dims": [200], "lr": 0.0002, "cp": 0.01, "dis_train_num": 5}
 	}
 ]

@@ -11,7 +11,7 @@ import json
 import os
 
 parameters_space = {
-	"batch_size":[64, 128, 256],
+	"batch_size":[64, 128, 256, 512],
 	"z_dim":[100, 200, 300], 
 	"gen_num_layers":[1,2,3],
 	"gen_hidden_dim":[100, 200, 300, 400],
@@ -72,6 +72,11 @@ def parameter_search(gen_model):
 	return param
 
 def thread_run(path, search, config, source_dst, target_dst, GPU):
+	torch.manual_seed(0)
+	torch.cuda.manual_seed(0)
+	torch.cuda.manual_seed_all(0)
+	np.random.seed(0)
+
 	if config["rand_search"] == "yes":
 		param = parameter_search(gen_model=config["gen_model"])
 	else:
@@ -116,6 +121,10 @@ def thread_run(path, search, config, source_dst, target_dst, GPU):
 		mask_gen, obs_gen, mask_dis, obs_dis = handler.train(mask_gen, obs_gen, mask_dis, obs_dis, param, config, search, GPU=GPU)	
 
 if __name__ == "__main__":
+	torch.manual_seed(0)
+	torch.cuda.manual_seed(0)
+	torch.cuda.manual_seed_all(0)
+	np.random.seed(0)
 	parser = argparse.ArgumentParser()
 	parser.add_argument('configs', help='a json config file')
 	parser.add_argument('gpu', default=0)

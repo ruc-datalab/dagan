@@ -111,7 +111,7 @@ def evaluation(y_true, y_pred, y_prob, num_class, threshold=None, parameters=Non
 	return [f1_score]
 
 
-def train_classifiers_simple(train_data, test_data, label_column):
+def train_classifiers_simple(train_file, train_data, test_data, label_column):
 	torch.manual_seed(0)
 	torch.cuda.manual_seed(0)
 	torch.cuda.manual_seed_all(0)
@@ -163,6 +163,8 @@ def train_classifiers_simple(train_data, test_data, label_column):
 			mlp_vals = mlp_val
 		else:
 			mlp_vals = mlp_vals + mlp_val
+	for i, mlp_val in enumerate(mlp_vals):
+		mlp_vals[i] = [train_file]+mlp_val
 	return mlp_vals
 
 if __name__ == "__main__":
@@ -190,11 +192,20 @@ if __name__ == "__main__":
 	else:
 		GPU = False
 
+	files = os.listdir(train)
+	train_files = []
+	for file in files:
+	    if "nomask" in file or "log" in file or "param" in file:
+	        continue
+	    train_files.append(train+file)
+	train_files.sort()
 	test_data = pd.read_csv(test)
-	train_data = pd.read_csv(train)
-
 	logging.basicConfig(filename=output+'_log.log', level=logging.DEBUG, format=LOG_FORMAT, datefmt=DATE_FORMAT)
-	mlp_vals = train_classifiers_simple(train_data, test_data, label_col)
-
-	df = pd.DataFrame(mlp_vals, columns=["l2", "f1_valid", "f1_test"])
+	mlp_vals = []
+	for train_file in train_files:
+		print(train_file)
+		train_data = pd.read_csv(train_file)	
+		mlp_val = train_classifiers_simple(train_file, train_data, test_data, label_col)
+		mlp_vals = mlp_vals + mlp_val
+	df = pd.DataFrame(mlp_vals, columns=["filename", "l2", "f1_valid", "f1_test"])
 	df.to_csv(output+".csv", index=None)
