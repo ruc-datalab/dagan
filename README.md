@@ -37,6 +37,7 @@ pip3 install -r requirements.txt
  - param: required if rand_search is 'no', hyper-parameter of the neural network  
 
 Folder "code/params" contains examples, you can run the code using those parameter files directly, or write a self-defined parameter file to train a new dataset.
+
 Note that the parameters in "code/params" are tuned on the GeForce RTX 3090 with cuda version=11.1.
 
 ### Step3: Run
