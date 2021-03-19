@@ -1,9 +1,0 @@
-[{
-    "output": "adult-MCAR",
-    "epoch": 2000,
-    "input_shape": 14,
-    "l2": [0, 0.001, 0.01, 0.1],
-    "label_column": "14",
-    "train_data":"train_mice/train_0.6_0.2.csv",
-    "test_data":"../dataset/adult/MCAR/test_0.2.csv"
-}]

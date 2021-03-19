@@ -62,6 +62,10 @@ class Handler:
 		self.path = path
 
 	def train(self, mask_gen, obs_gen, mask_dis, obs_dis, param, config, search, GPU=False):
+		torch.manual_seed(0)
+		torch.cuda.manual_seed(0)
+		torch.cuda.manual_seed_all(0)
+		np.random.seed(0)
 		logging.basicConfig(filename=self.path+'train_log_{}.log'.format(search), level=logging.DEBUG, format=LOG_FORMAT, datefmt=DATE_FORMAT)
 		cp = param["cp"]
 		lr = param["lr"]
@@ -70,10 +74,6 @@ class Handler:
 		epochs = config["epochs"]
 		steps_per_epoch = config["steps_per_epoch"]
 		itertimes = steps_per_epoch/50
-		torch.manual_seed(0)
-		torch.cuda.manual_seed(0)
-		torch.cuda.manual_seed_all(0)
-		np.random.seed(0)
 		if GPU:
 			if mask_gen is not None:
 				mask_gen.GPU = True
@@ -208,7 +208,8 @@ class Handler:
 					mask_d_l = mask_D_Loss.data if mask_gen is not None else 0.0
 					logging.info("iterator {}, mask_D_Loss:{}, obs_D_Loss:{}, G_Loss:{}\n".format(it, mask_d_l, obs_D_Loss.data, G_Loss.data))
 					print("iterator {}, mask_D_Loss:{}, obs_D_Loss:{}, G_Loss:{}\n".format(it, mask_d_l, obs_D_Loss.data, G_Loss.data))
-			self.translate(mask_gen, obs_gen, z_dim, self.path+"translate_{}_{}".format(search, epoch), GPU=True, repeat=1)
+			self.translate(mask_gen, obs_gen, z_dim, self.path+"gan_output", GPU=True, repeat=1)
+			#self.translate(mask_gen, obs_gen, z_dim, self.path+"translate_{}_{}".format(search, epoch), GPU=True, repeat=1)
 			
 		if GPU:
 			if mask_gen is not None:
@@ -384,6 +385,10 @@ class Handler:
 		self.__dict__[mname] = torch.load(mpath)
 
 	def translate(self, mask_gen, obs_gen, z_dim, file_path, GPU=True, repeat=1):
+		torch.manual_seed(0)
+		torch.cuda.manual_seed(0)
+		torch.cuda.manual_seed_all(0)
+		np.random.seed(0)
 		if mask_gen is not None:
 			mask_gen.eval()
 		if obs_gen is not None:
@@ -428,8 +433,9 @@ class Handler:
 				else:
 					sample_data = sample_data.append(df)
 					sample_data_nomask = sample_data_nomask.append(df_nomask)
-			sample_data.to_csv(file_path+"_"+str(time)+".csv", index = None)
-			sample_data_nomask.to_csv(file_path+"_"+str(time)+"_nomask.csv", index=None)
+			sample_data.to_csv(file_path+".csv", index = None)
+			#sample_data.to_csv(file_path+"_"+str(time)+".csv", index = None)
+			#sample_data_nomask.to_csv(file_path+"_"+str(time)+"_nomask.csv", index=None)
 		if mask_gen is not None:
 			mask_gen.train()
 		if obs_gen is not None:

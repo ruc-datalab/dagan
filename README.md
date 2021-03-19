@@ -38,6 +38,8 @@ pip3 install -r requirements.txt
 
 Folder "code/params" contains examples, you can run the code using those parameter files directly, or write a self-defined parameter file to train a new dataset.
 
+Note that the parameters in "code/params" are tuned on the GeForce RTX 3090 with cuda version=11.1.
+
 ### Step3: Run
 Run the code with the following command :
 ```sh
@@ -51,13 +53,13 @@ python code/train.py code/params/param-eyestate-MNAR 0
 ### Step4: Evaluation
 Run the code with the following command :
 ```sh
-python code/evaluate.py --train=[training file] --test=[test file] 
+python code/evaluate.py --train=[training file path] --test=[test file] 
                         --label_col=[name of label column] --output=[output filename] 
                         --device=[gpu id]
 ```
 A example running command:
 ```sh
-python code/evaluate.py --train=ipums_adapt.csv --test=dataset/ipums/ipums_test.csv 
+python code/evaluate.py --train=expdir/ipums-LSTM/ --test=dataset/ipums/ipums_test.csv 
                         --label_col=movedin --output=ipums_result 
                         --device=0
 ```
